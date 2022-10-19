@@ -1,9 +1,4 @@
-// const Route       = ReactRouterDOM.Route;
-// const Link        = ReactRouterDOM.Link;
-// const HashRouter  = ReactRouterDOM.HashRouter;
 import React from "react";
-
-
 
 function Card(props){
     function classes(){
