@@ -1,12 +1,22 @@
-import React from "react";
 import Card from "./card";
-import { useContext } from "react";
-import UserContext from "./context";
+import { useContext, useState, useEffect } from "react";
 
 function AllData() {
-  const ctx = useContext(UserContext);
+  const [userData, setUserData] = useState(null)
 
-  let allUserDataCards = ctx.users.map((user, i) => (
+  useEffect(() => {
+    //fetch all account from API
+    fetch('http://localhost:4000/account/all')
+      .then(response => response.json())
+      .then(data => {
+        console.log('data: ',data)
+        setUserData(data)
+      })
+  }, [])
+
+  userData && console.log('userData: ',userData)
+
+  let allUserDataCards = userData ? userData.map((user, i) => (
     <div key={user.name + i} className="col">
       <Card
         txtcolor="black"
@@ -20,7 +30,7 @@ function AllData() {
         }
       />
     </div>
-  ));
+  )) : <h1>...Loading</h1>;
   
   return (
     <div className="row row-cols-1 row-cols-md-3 g-4">{allUserDataCards}</div>

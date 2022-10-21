@@ -1,20 +1,24 @@
 var express = require('express')
 var app = express()
 var cors = require('cors')
+var dal = require('./dal.js')
 
 // app.use(express.static('front-end'))
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 
 const path = require("path");
 app.use(express.static(path.join(__dirname,"front-end","build")))
 
 // create user account
 app.get('/account/create/:name/:email/:password', function (req, res) {
-    res.send({
-        name:   req.params.name,
-        email:  req.params.email,
-        password:   req.params.password
-    })
+    // else create user
+    dal.create(req.params.name, req.params.email, req.params.password).
+        then((user) => {
+            console.log(user)
+            res.send(user)
+        })
 })
 
 //login user
@@ -27,10 +31,11 @@ app.get('/account/login/:email/:password', function (req, res) {
 
 //all accounts
 app.get('/account/all', function (req, res) {
-    res.send({
-        name:   'peter',
-        email:  'peter@mit.edu',
-        password:   'secret'
+    dal.all().
+        then((docs) => {
+            console.log(docs)
+            res.send(docs)
+    
     })
 })
 

@@ -1,6 +1,6 @@
-import {useContext, useState} from "react";
+import {useState} from "react";
 import Card from "./card";
-import UserContext from "./context";
+
 
 function CreateAccount(){
   
@@ -9,7 +9,6 @@ function CreateAccount(){
   const [name, setName]         = useState('');
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
-  const ctx = useContext(UserContext);  
 
   function validate(field, label){
       if (!field) {
@@ -34,12 +33,19 @@ function CreateAccount(){
       return true;
   }
 
-  function handleCreate(){
+  async function handleCreate(){
     console.log(name,email,password);
     if (!validate(name,     'name'))     return;
     if (!validate(email,    'email'))    return;
     if (!validatePassword(password)) return;
-    ctx.users.push({name,email,password,balance:100});
+
+    const url = `http://localhost:4000/account/create/${name}/${email}/${password}`
+    console.log(url)
+
+    var res = await fetch(url)
+    var data = await res.json()
+    console.log(data)
+
     setShow(false);
   }    
 
