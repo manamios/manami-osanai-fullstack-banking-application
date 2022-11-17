@@ -1,4 +1,12 @@
-import {useState} from "react";
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  auth,
+  registerWithEmailAndPassword,
+  signInWithGoogle,
+} from "./firebase";
+
 import Card from "./card";
 
 
@@ -9,6 +17,8 @@ function CreateAccount(){
   const [name, setName]         = useState('');
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const [user, loading, error] = useAuthState(auth);
 
   function validate(field, label){
       if (!field) {
@@ -39,6 +49,8 @@ function CreateAccount(){
     if (!validate(email,    'email'))    return;
     if (!validatePassword(password)) return;
 
+    registerWithEmailAndPassword(name, email, password);
+
     const url = `http://localhost:4000/account/create/${name}/${email}/${password}`
     console.log(url)
 
@@ -55,6 +67,11 @@ function CreateAccount(){
     setPassword('');
     setShow(true);
   }
+
+  useEffect(() => {
+    if (loading) return;
+    if (user) navigate("/");
+  }, [user, loading]);
 
   return (
     <Card 

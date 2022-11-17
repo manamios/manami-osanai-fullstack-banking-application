@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom"
+import {logout} from "./firebase"
 
 function NavBar(){
   return(
@@ -21,6 +22,12 @@ function NavBar(){
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="AllData">AllData</Link>
+          </li>          
+          <li className="nav-item">
+            <Link className="nav-link" to="login">login</Link>
+          </li>          
+          <li className="nav-item">
+            <Link className="nav-link" onClick={logout}>Logout</Link>
           </li>          
         </ul>
       </div>

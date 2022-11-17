@@ -8,6 +8,7 @@ import Deposit from './deposit'
 import Withdraw from './withdraw'
 import AllData from './alldata'
 import UserContext from './context';
+import Login from './login';
 
 // const UserContext = createContext(null);
 
@@ -21,6 +22,7 @@ function App() {
         <div className="container" style={{padding: "20px"}}>
           <Routes>
             <Route path="/" exact element={<Home />} />
+            <Route path="/login" exact element={<Login />} />
             <Route path="/CreateAccount/" element={<CreateAccount />} />
             <Route path="/deposit/" element={<Deposit />} />
             <Route path="/withdraw/" element={<Withdraw />} />
