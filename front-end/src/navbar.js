@@ -16,6 +16,7 @@ function NavBar(){
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
+        {user && (<>
           <li className="nav-item">
             <Link className="nav-link" to="Deposit">Deposit</Link>
           </li>
@@ -25,6 +26,7 @@ function NavBar(){
           <li className="nav-item">
             <Link className="nav-link" to="AllData">AllData</Link>
           </li>
+          </>)}
           { !user ? (<>   
             <li className="nav-item">
               <Link className="nav-link" to="login">Login</Link>

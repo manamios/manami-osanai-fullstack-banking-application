@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "./card";
+import { auth, incrementBalance } from "./firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-function Withdraw(){
-  const [balance, setBalance]                     = React.useState(100);
+function Withdraw({userData, setUserData}){
+  const [balance, setBalance]                     = React.useState(userData.balance);
   const [withdrawAmount, setWithdrawAmount]         = React.useState('');
   const [status, setStatus]                       = React.useState('');
+  const [user] = useAuthState(auth);
+
+  useEffect(() => {
+    userData && setBalance(userData.balance)
+  }, [userData])
   
   function withdrawMoney() {
     if (!withdrawAmount) {
@@ -36,7 +43,10 @@ function Withdraw(){
 
     let newBalance = balance - parseInt(withdrawAmount)
 
+    incrementBalance(user, -withdrawAmount)
     setBalance(newBalance)
+    const newUserData = {...userData, "balance": newBalance}
+    setUserData(newUserData)
     setStatus(`Success! your new balance is $${newBalance}`)
     setWithdrawAmount('')
     setTimeout(() => setStatus(''),3000);

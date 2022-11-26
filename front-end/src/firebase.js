@@ -71,9 +71,9 @@ const logInWithEmailAndPassword = async (email, password, e) => {
 
 const getUserDoc = async (user) => {
   console.log(user)
-  const q = query(collection(db, "users"), where("uid", "==", user.uid));
+  const q = await query(collection(db, "users"), where("uid", "==", user.uid));
   const docs = await getDocs(q);
-  const userDoc = docs.docs[0]
+  const userDoc = await docs.docs[0]
   return userDoc
 }
 

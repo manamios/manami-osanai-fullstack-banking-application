@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Card from "./card";
-import { auth, getUserData, incrementBalance } from "./firebase";
+import { auth, incrementBalance } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-function Deposit({userData}){
-  const [balance, setBalance]                     = React.useState(0);
-  const [depositAmount, setDepositAmount]         = React.useState('');
-  const [status, setStatus]                       = React.useState('');
+function Deposit({userData, setUserData}){
+  const [balance, setBalance]                     = useState(userData.balance);
+  const [depositAmount, setDepositAmount]         = useState('');
+  const [status, setStatus]                       = useState('');
   const [user] = useAuthState(auth);
 
   useEffect(() => {
     setBalance(userData.balance)
-  }, [])
+  }, [userData])
   
   
   function depositMoney() {
@@ -41,6 +41,8 @@ function Deposit({userData}){
 
     incrementBalance(user, depositAmount)
     setBalance(newBalance)
+    const newUserData = {...userData, "balance": newBalance}
+    setUserData(newUserData)
     setStatus(`Success! your new balance is $${newBalance}`)
     setDepositAmount('')
     setTimeout(() => setStatus(''),3000);

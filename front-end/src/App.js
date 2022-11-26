@@ -1,6 +1,6 @@
 // import createContext from 'react';
 import './App.css';
-import {BrowserRouter, Routes, Route, useNavigate} from "react-router-dom"
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
 import NavBar from './navbar'
 import Home from './home'
 import CreateAccount from './createaccount'
@@ -22,12 +22,10 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getUserData(user)
-      setUserData(data)
-      console.log(userData)
-    }
+      const data = user && await getUserData(user)
+      setUserData(data)  
+    }  
     fetchData()
-    console.log(userData)
   }, [user])
   
 
@@ -35,18 +33,25 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <NavBar/>
-      <UserContext.Provider value={{users:[{name:'abel',email:'abel@mit.edu',password:'secret',balance:100}]}}>
         <div className="container" style={{padding: "20px"}}>
           <Routes>
-            <Route path="/login" exact element={<Login />} />
-            <Route path="/" exact element={user ? <Home /> : <Login />} />
-            <Route path="/CreateAccount/" element={<CreateAccount />} />
-            <Route path="/deposit/" element={<Deposit userData={userData} />} />
-            <Route path="/withdraw/" element={<Withdraw />} />
-            <Route path="/alldata/" element={<AllData />} />
+            {!user ? 
+              <>
+              <Route path="/login" exact element={<Login />} />
+              <Route path="/CreateAccount/" element={<CreateAccount />} />
+              {/* <Route path="/*" element={<Navigate replace to="/login"/>} /> */}
+              </>
+              :
+              <>
+              <Route path="/" exact element={user && userData && <Home userData={userData} /> } />
+              <Route path="/deposit/" element={userData && <Deposit setUserData={setUserData} userData={userData} />} />
+              <Route path="/withdraw/" element={userData && <Withdraw setUserData={setUserData} userData={userData}/>} />
+              <Route path="/alldata/" element={<AllData />} />
+              <Route path="/*" element={<Navigate replace to="/"/>} />
+              </>
+            }
           </Routes>
         </div>
-      </UserContext.Provider>      
     </BrowserRouter>
     </div>
   );
