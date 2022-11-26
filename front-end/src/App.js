@@ -9,14 +9,27 @@ import Withdraw from './withdraw'
 import AllData from './alldata'
 import UserContext from './context';
 import Login from './login';
-import { auth } from "./firebase"
+import { auth, getUserData } from "./firebase"
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect, useState } from 'react';
 
 // const UserContext = createContext(null);
 
 function App() {
   const [user] = useAuthState(auth);
+  const [userData, setUserData] = useState(null)
   // const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getUserData(user)
+      setUserData(data)
+      console.log(userData)
+    }
+    fetchData()
+    console.log(userData)
+  }, [user])
+  
 
   return (
     <div className="App">
@@ -28,7 +41,7 @@ function App() {
             <Route path="/login" exact element={<Login />} />
             <Route path="/" exact element={user ? <Home /> : <Login />} />
             <Route path="/CreateAccount/" element={<CreateAccount />} />
-            <Route path="/deposit/" element={<Deposit />} />
+            <Route path="/deposit/" element={<Deposit userData={userData} />} />
             <Route path="/withdraw/" element={<Withdraw />} />
             <Route path="/alldata/" element={<AllData />} />
           </Routes>

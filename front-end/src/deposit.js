@@ -3,14 +3,19 @@ import Card from "./card";
 import { auth, getUserData, incrementBalance } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-function Deposit(){
+function Deposit({userData}){
   const [balance, setBalance]                     = React.useState(0);
   const [depositAmount, setDepositAmount]         = React.useState('');
   const [status, setStatus]                       = React.useState('');
   const [user] = useAuthState(auth);
+
+  useEffect(() => {
+    setBalance(userData.balance)
+  }, [])
+  
   
   function depositMoney() {
-    
+
     if (!depositAmount) {
       setStatus('Enter deposit amount')
       setTimeout(() => setStatus(''),3000);
