@@ -62,20 +62,21 @@ function CreateAccount(){
   }    
 
   function clearForm(){
-    setName('');
-    setEmail('');
-    setPassword('');
-    setShow(true);
+    // setName('');
+    // setEmail('');
+    // setPassword('');
+    // setShow(true);
+    if (user) navigate("/");
   }
 
   useEffect(() => {
     if (loading) return;
-    if (user) navigate("/");
+    // if (user) navigate("/");
   }, [user, loading]);
 
   return (
     <Card 
-      bgcolor="info"
+      bgcolor={show ? "info": "success"}
       header="Create Account"
       status={status}
       body={show ? (  
@@ -91,7 +92,7 @@ function CreateAccount(){
             ):(
               <>
               <h5>Success</h5>
-              <button type="submit" className="btn btn-light" onClick={clearForm}>Add another account</button>
+              <button type="submit" className="btn btn-light" onClick={clearForm}>Home</button>
               </>
             )}
     />

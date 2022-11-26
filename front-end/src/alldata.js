@@ -1,20 +1,23 @@
 import Card from "./card";
 import { useContext, useState, useEffect } from "react";
+import { auth } from "./firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function AllData() {
   const [userData, setUserData] = useState(null)
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
     //fetch all account from API
     fetch('http://localhost:4000/account/all')
       .then(response => response.json())
       .then(data => {
-        console.log('data: ',data)
+        // console.log('data: ',data)
         setUserData(data)
       })
   }, [])
 
-  userData && console.log('userData: ',userData)
+  // userData && console.log('userData: ',userData)
 
   let allUserDataCards = userData ? userData.map((user, i) => (
     <div key={user.name + i} className="col">

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword, signInWithGoogle } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./login.css";
+import Card from "./card"
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -18,40 +19,49 @@ function Login() {
       if (user) navigate("/");
       console.log(user)
     }, [user, loading]);
+
     return (
-      <div className="login">
-        <div className="login__container">
-          <input
-            type="text"
-            className="login__textBox"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="E-mail Address"
-          />
-          <input
-            type="password"
-            className="login__textBox"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-          <button
-            className="login__btn"
-            onClick={() => logInWithEmailAndPassword(email, password)}
-          >
-            Login
-          </button>
-          <button className="login__btn login__google" onClick={signInWithGoogle}>
-            Login with Google
-          </button>
-          <div>
-            <Link to="/reset">Forgot Password</Link>
-          </div>
-          <div>
-            Don't have an account? <Link to="/register">Register</Link> now.
-          </div>
-        </div>
-      </div>
+        <Card 
+        bgcolor="secondary"
+        header="Login"
+        // status={status}
+        body={(
+            <form>
+                Email Adress<br/>
+              <input
+                type="text"
+                className="form-control"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email Address"
+              />
+              <br/>
+              Password<br/>
+              <input
+                type="password"
+                className="form-control"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+              />
+              <br/>
+              <button
+                className="btn btn-light"
+                onClick={(e) => logInWithEmailAndPassword(email, password, e)}
+              >
+                Login
+              </button>
+              <br/>
+              <br/>
+              <button type="button" className="btn btn-light login__google" onClick={signInWithGoogle}>
+                Login with Google
+              </button>
+              <div>
+                Don't have an account? <br/><Link to="/CreateAccount">Register</Link> now.
+              </div>
+            </form>
+        )}
+        ></Card>
     );
-  }
-  export default Login;
+}
+export default Login;

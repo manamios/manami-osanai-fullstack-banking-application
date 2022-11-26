@@ -1,7 +1,12 @@
 import {Link} from "react-router-dom"
-import {logout} from "./firebase"
+import { logout, auth } from "./firebase"
+import { useAuthState } from "react-firebase-hooks/auth";
+
+
 
 function NavBar(){
+  const [user] = useAuthState(auth);
+
   return(
     <>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -12,9 +17,6 @@ function NavBar(){
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <Link className="nav-link" to="/CreateAccount">Create Account</Link>
-          </li>
-          <li className="nav-item">
             <Link className="nav-link" to="Deposit">Deposit</Link>
           </li>
           <li className="nav-item">
@@ -22,14 +24,22 @@ function NavBar(){
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="AllData">AllData</Link>
-          </li>          
-          <li className="nav-item">
-            <Link className="nav-link" to="login">login</Link>
-          </li>          
-          <li className="nav-item">
-            <Link className="nav-link" onClick={logout}>Logout</Link>
-          </li>          
+          </li>
+          { !user ? (<>   
+            <li className="nav-item">
+              <Link className="nav-link" to="login">Login</Link>
+            </li>          
+            <li className="nav-item">
+              <Link className="nav-link" to="/CreateAccount">Create Account</Link>
+            </li>
+            </>) 
+          : 
+            <li className="nav-item">
+              <Link className="nav-link" onClick={logout}>Logout</Link>
+            </li>      
+          }
         </ul>
+        {user && <li className="navbar-text ml-auto">Hello, {user.displayName ? user.displayName : user.email}</li>}
       </div>
     </nav>
     </>
