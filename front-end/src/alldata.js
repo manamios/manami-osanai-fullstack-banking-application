@@ -12,12 +12,9 @@ function AllData() {
     fetch('http://localhost:4000/account/all')
       .then(response => response.json())
       .then(data => {
-        // console.log('data: ',data)
         setUserData(data)
       })
   }, [])
-
-  // userData && console.log('userData: ',userData)
 
   let allUserDataCards = userData ? userData.map((user, i) => (
     <div key={user.name + i} className="col">

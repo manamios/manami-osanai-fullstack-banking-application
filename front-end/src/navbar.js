@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom"
+import {Link, Navigate, useNavigate} from "react-router-dom"
 import { logout, auth } from "./firebase"
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -6,6 +6,15 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 function NavBar(){
   const [user] = useAuthState(auth);
+  const navigate = useNavigate();
+
+  function onLogout() {
+    logout().then(() => {
+      navigate("/login")
+    }
+    )
+    
+  }
 
   return(
     <>
@@ -37,7 +46,7 @@ function NavBar(){
             </>) 
           : 
             <li className="nav-item">
-              <Link className="nav-link" onClick={logout}>Logout</Link>
+              <Link className="nav-link" onClick={onLogout}>Logout</Link>
             </li>      
           }
         </ul>
