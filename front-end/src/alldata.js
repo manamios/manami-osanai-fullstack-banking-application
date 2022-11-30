@@ -1,7 +1,8 @@
+
 import Card from "./card";
 import { useState, useEffect } from "react";
-import { auth } from "./firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+// import { auth } from "./firebase";
+// import { useAuthState } from "react-firebase-hooks/auth";
 
 function AllData() {
   const [userData, setUserData] = useState(null)
