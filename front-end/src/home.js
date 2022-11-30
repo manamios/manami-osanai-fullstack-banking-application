@@ -10,7 +10,7 @@ function Home({userData}){
       text="Practice Deposit and Withdraw."
       body={(<>
         <h4>{`Current Balance: $${userData.balance}`}</h4><hr/>
-        <img src={babyhand} className="img-fluid" alt="Responsive image"/>
+        <img src={babyhand} className="img-fluid" alt="baby's hand holding mouse"/>
         </>)}
     />    
   );  

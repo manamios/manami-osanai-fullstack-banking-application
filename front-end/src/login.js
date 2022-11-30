@@ -8,7 +8,7 @@ import Card from "./card"
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -18,7 +18,7 @@ function Login() {
       }
       if (user) navigate("/");
       console.log(user)
-    }, [user, loading]);
+    }, [user, loading, navigate]);
 
     function onLogin(email, password, e){
       logInWithEmailAndPassword(email, password, e).then(() => {

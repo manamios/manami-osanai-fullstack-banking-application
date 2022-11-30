@@ -16,7 +16,6 @@ import {
   collection,
   where,
   addDoc,
-  getDoc,
   doc,
   increment
 } from "firebase/firestore";
@@ -97,7 +96,7 @@ const incrementBalance = async (user, amount) => {
   const updatedDoc = await updateDoc(userRef, {
     "balance": incrementBy
     })
-  console.log(await getUserData(user))
+  return updatedDoc
 }
 
 const registerWithEmailAndPassword = async (name, email, password) => {

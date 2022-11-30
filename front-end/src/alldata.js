@@ -1,11 +1,10 @@
 import Card from "./card";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 function AllData() {
   const [userData, setUserData] = useState(null)
-  const [user] = useAuthState(auth);
 
   useEffect(() => {
     //fetch all account from API

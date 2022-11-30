@@ -1,4 +1,4 @@
-import {Link, Navigate, useNavigate} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import { logout, auth } from "./firebase"
 import { useAuthState } from "react-firebase-hooks/auth";
 import Nav from 'react-bootstrap/Nav';

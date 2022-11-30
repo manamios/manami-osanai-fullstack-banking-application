@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   auth,
-  registerWithEmailAndPassword,
-  signInWithGoogle,
+  registerWithEmailAndPassword
 } from "./firebase";
 
 import Card from "./card";
@@ -18,7 +17,7 @@ function CreateAccount(){
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
 
   function validate(field, label){
       if (!field) {
