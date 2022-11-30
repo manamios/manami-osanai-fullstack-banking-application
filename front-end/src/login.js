@@ -20,6 +20,19 @@ function Login() {
       console.log(user)
     }, [user, loading]);
 
+    function onLogin(email, password, e){
+      logInWithEmailAndPassword(email, password, e).then(() => {
+        navigate("/")
+      })
+    }
+
+    function onGoogleLogin(){
+      signInWithGoogle()
+      .then(() => {
+        navigate("/")
+      })
+    }
+
     return (
         <Card 
         bgcolor="secondary"
@@ -47,13 +60,13 @@ function Login() {
               <br/>
               <button
                 className="btn btn-light"
-                onClick={(e) => logInWithEmailAndPassword(email, password, e)}
+                onClick={(e) => onLogin(email, password, e)}
               >
                 Login
               </button>
               <br/>
               <br/>
-              <button type="button" className="btn btn-light login__google" onClick={signInWithGoogle}>
+              <button type="button" className="btn btn-light login__google" onClick={onGoogleLogin}>
                 Login with Google
               </button>
               <div>

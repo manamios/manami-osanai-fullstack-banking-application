@@ -42,7 +42,7 @@ function App() {
               <Route path="/deposit/" element={userData && <Deposit setUserData={setUserData} userData={userData} />} />
               <Route path="/withdraw/" element={userData && <Withdraw setUserData={setUserData} userData={userData}/>} />
               <Route path="/alldata/" element={<AllData />} />
-              <Route path="/*" element={<Navigate replace to="/"/>} />
+              {/* <Route path="/*" element={<Navigate replace to="/"/>} /> */}
               </>
             }
           </Routes>
